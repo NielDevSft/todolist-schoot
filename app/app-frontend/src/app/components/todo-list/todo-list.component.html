@@ -1,0 +1,102 @@
+<mat-card-title [ngStyle]="{ 'text-align': 'center' }">
+  <h2>Todo list!</h2>
+</mat-card-title>
+<mat-card-content>
+  <mat-card>
+    <mat-card-title>
+      Filters
+      <button
+        mat-mini-fab
+        matTooltip="Add a new task"
+        color="primary"
+        [ngStyle]="{ float: 'right' }"
+        (click)="openModal()"
+      >
+        <mat-icon>plus_one</mat-icon>
+      </button>
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form [formGroup]="itemForm">
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input formControlName="description" matNativeControl />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Priority Level</mat-label>
+          <input formControlName="priority" matNativeControl type="number" />
+        </mat-form-field>
+        <button
+          mat-mini-fab
+          matTooltip="Search"
+          color="primary"
+          [ngStyle]="{ float: 'right' }"
+          (click)="onSearch()"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef>Due Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.dueDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef>Priority level</th>
+        <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
+      </ng-container>
+      <ng-container matColumnDef="dtaCreatedAt">
+        <th mat-header-cell *matHeaderCellDef>Create At</th>
+        <td mat-cell *matCellDef="let element">{{ element.dtaCreatedAt }}</td>
+      </ng-container>
+      <ng-container matColumnDef="dtaUpdatedAt">
+        <th mat-header-cell *matHeaderCellDef>Last update</th>
+        <td mat-cell *matCellDef="let element">{{ element.dtaUpdatedAt }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            flex
+            mat-mini-fab
+            matTooltip="Delete"
+            color="accent"
+            [ngStyle]="{ float: 'right' }"
+            (click)="onDelete(element.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            flex
+            mat-mini-fab
+            matTooltip="Edit"
+            color="basic"
+            [ngStyle]="{ float: 'right' }"
+            (click)="openModal(element.id)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </mat-card>
+</mat-card-content>

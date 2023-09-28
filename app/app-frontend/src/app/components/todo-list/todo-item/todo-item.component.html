@@ -1,0 +1,47 @@
+<mat-card fxLayout="column" fxLayoutAlign="space-between start">
+  <mat-card-title> {{ data.id ? "Edit " : "Add a new" }} task</mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <form [formGroup]="itemForm" fxFlex>
+      <div fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start">
+          <mat-form-field>
+            <mat-label>Due date</mat-label>
+            <input
+              formControlName="dueDate"
+              matNativeControl
+              fxFlex="80"
+              type="date"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Priority Level</mat-label>
+            <input
+              formControlName="priority"
+              matNativeControl
+              fxFlex="20"
+              type="number"
+            />
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between start">
+          <mat-form-field fxFlex="100">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="description" matInput></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxFlexAlign="end">
+        <button
+          mat-raised-button
+          (click)="onSubmit()"
+          [disabled]="itemForm.invalid"
+          color="accent"
+        >
+          {{ data.id ? "Save" : "Add" }}
+        </button>
+        <button (click)="onClose()" mat-raised-button>Cancel</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
