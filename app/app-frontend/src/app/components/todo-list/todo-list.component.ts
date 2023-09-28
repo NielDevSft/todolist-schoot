@@ -58,12 +58,14 @@ export class TodoListComponent implements OnInit, AfterViewInit {
       data: { id },
     });
     dialogRef.afterClosed().subscribe((item) => {
-      this.dataSource = new MatTableDataSource<Item>(
-        this.dataSource.data.find((i) => i.id === item.id)
-          ? this.dataSource.data.map((i) => (i.id === item.id ? item : i))
-          : [...this.dataSource.data, item]
-      );
-      this.dataSource.paginator = this.paginator;
+      if (item) {
+        this.dataSource = new MatTableDataSource<Item>(
+          this.dataSource.data.find((i) => i.id === item.id)
+            ? this.dataSource.data.map((i) => (i.id === item.id ? item : i))
+            : [...this.dataSource.data, item]
+        );
+        this.dataSource.paginator = this.paginator;
+      }
     });
   }
   onSearch() {
